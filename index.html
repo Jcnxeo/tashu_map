@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>대전 타슈 자전거 쏠림 지도</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <strong>타슈 쏠림 분석</strong>
+        <span>2026년 2월 대여이력 기반</span>
+      </nav>
+      <div class="hero-inner">
+        <p class="eyebrow">Daejeon Public Bike Data Story</p>
+        <h1>대전 타슈는 어디에 쌓이고, 어디에서 부족할까?</h1>
+        <p class="lead">
+          대여소별 대여 횟수와 반납 횟수를 비교해 자전거가 많이 모이는 곳은 초록색,
+          부족해지는 곳은 빨간색으로 지도에 표시했다.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="map-section" aria-label="대전 타슈 쏠림 지도">
+        <div class="toolbar">
+          <div>
+            <h2>대여소 쏠림 지도</h2>
+            <p>쏠림 점수 = 반납 횟수 - 대여 횟수</p>
+          </div>
+          <div class="filters" role="group" aria-label="지도 필터">
+            <button class="filter-button active" data-filter="all">전체</button>
+            <button class="filter-button" data-filter="shortage">부족</button>
+            <button class="filter-button" data-filter="surplus">과잉</button>
+            <button class="filter-button" data-filter="balanced">균형</button>
+          </div>
+        </div>
+
+        <div class="map-layout">
+          <div id="map" aria-label="타슈 대여소 지도"></div>
+          <aside class="side-panel">
+            <div class="stats-grid">
+              <div>
+                <span>분석 대여소</span>
+                <strong id="stationCount">-</strong>
+              </div>
+              <div>
+                <span>총 이용 기록</span>
+                <strong id="tripCount">-</strong>
+              </div>
+              <div>
+                <span class="red-dot">부족</span>
+                <strong id="shortageCount">-</strong>
+              </div>
+              <div>
+                <span class="green-dot">과잉</span>
+                <strong id="surplusCount">-</strong>
+              </div>
+            </div>
+
+            <div class="legend">
+              <span><i class="legend-red"></i>대여가 더 많아 부족</span>
+              <span><i class="legend-green"></i>반납이 더 많아 과잉</span>
+              <span><i class="legend-gray"></i>대여와 반납이 비슷함</span>
+            </div>
+
+            <h3>자전거 부족 TOP 8</h3>
+            <ol id="shortageList" class="rank-list"></ol>
+
+            <h3>자전거 과잉 TOP 8</h3>
+            <ol id="surplusList" class="rank-list"></ol>
+          </aside>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div>
+          <h2>분석 방법</h2>
+          <p>
+            대여이력 데이터에서 대여 대여소 ID와 반납 대여소 ID를 각각 집계한 뒤,
+            대여소별로 반납 횟수에서 대여 횟수를 뺐다. 점수가 음수이면 자전거가 빠져나가는
+            경향이 강한 곳, 양수이면 자전거가 쌓이는 경향이 강한 곳으로 해석했다.
+          </p>
+        </div>
+        <div>
+          <h2>활용 아이디어</h2>
+          <p>
+            빨간색 대여소에는 재배치 트럭을 우선 배치하고, 고지대나 부족 대여소에 반납하면
+            포인트를 주는 방식으로 시민 참여형 해결책을 만들 수 있다.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./data/stations.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
